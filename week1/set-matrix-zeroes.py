@@ -1,7 +1,5 @@
 """
 
-https://leetcode.com/problems/set-matrix-zeroes/submissions/
-
 Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in-place.
 
 Example 1:
@@ -38,23 +36,25 @@ A straight forward solution using O(mn) space is probably a bad idea.
 A simple improvement uses O(m + n) space, but still not the best solution.
 Could you devise a constant space solution?
 
+https://leetcode.com/problems/set-matrix-zeroes/
+
 """
 
 
 class Solution(object):
+    """
+
+    matrix 의 모든 공간이 zero 일 경우(WorstCase),
+    matrix 를 그대로 순회 한다면, O(mn) space 사용하게 됨
+    순회 할 때, row, col 중복을 제거한다면, WorstCase 에서 O(m+n) space 사용하게 됨
+    근데 그거 말고 constant space 를 쓸 수 있게 하라고?
+
+    O(m+n) space
+    O(n^2) time
+
+    """
 
     def setZeroes(self, matrix):
-        """
-
-        matrix 의 모든 공간이 zero 일 경우(WorstCase),
-        matrix 를 그대로 순회 한다면, O(mn) space 사용하게 됨
-        순회 할 때, row, col 중복을 제거한다면, WorstCase 에서 O(m+n) space 사용하게 됨
-        근데 그거 말고 constant space 를 쓸 수 있게 하라고?
-
-        O(m+n) space
-        O(n by n) time
-
-        """
 
         row_nums, col_nums = self.findZeroes(matrix)
         self.pushBomb(matrix, col_nums=col_nums, row_nums=row_nums)

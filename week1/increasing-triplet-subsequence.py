@@ -17,12 +17,29 @@ Example 2:
 Input: [5,4,3,2,1]
 Output: false
 
+https://leetcode.com/problems/increasing-triplet-subsequence/
 
 """
-import bisect
 
 
 class Solution(object):
+    """
+
+    접근
+     * i, j, k 값이 변함에 따라 첫번째 값, 두번째 값, 세번째 값이 존재한다.
+     * 첫번째 보다 크고, 두번째 보다 큰, 세번째 값이 존재한다면 True 다
+     * 1) 첫번째 값은 처음에 설정한 다음, 언제 바꿔야 할까?
+     * 2) 처음 두번째 값은, 첫번째 값(Left)보다 큰 값이 나올 경우에 설정해준다. 그 다음 언제 바꿔야 할까?
+
+    해결
+     * 1) 현재 Num 값이 더 작을 경우 바꿔 준다.
+        - 값이 같은 경우는 처리를 하지 않는다.
+        - Second 가 존재하므로, First 는 더 낮아져도 상관이 없고, 오른쪽에 있는 값들과 비교 하기 위해 first를 변경한다
+
+     * 2) 현재 Num 값 First 보다 크고 Second 보다 작을 때 바꿔 준다 (같은 경우는 무시)
+        - 오른쪽에 있는 나머지 값들과 비교 하기 위해 second 를 변경한다
+
+    """
 
     def increasingTriplet(self, nums):
 
@@ -30,7 +47,8 @@ class Solution(object):
         second = float('inf')
 
         for num in nums:
-            if num < first:
+            print(first, second)
+            if num <= first:
                 first = num
             elif num <= second:
                 second = num
@@ -39,8 +57,7 @@ class Solution(object):
 
         return False
 
-    def increasingTripletFirstSolution(self, nums):
-
+    def increasingTripletMyFirstSolution(self, nums):
 
         candidates = []
         isExist = False
@@ -83,13 +100,14 @@ class Solution(object):
             return False, candidates[:2]
 
 
-
 def main():
-    my = [1, 0, 2, 0, -1, 3]
-    result = Solution().increasingTriplet(my)
+
+    testcase = [1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, 3]
+
+    result = Solution().increasingTriplet(testcase)
     print(result)
 
-    result = Solution().bestSolution(my)
+    result = Solution().increasingTripletMyFirstSolution(testcase)
     print(result)
 
 
