@@ -22,43 +22,63 @@ Output: []
 
 
 class Solution(object):
+
+    def __init__(self):
+        self.debug = False
+
     def findSubstring(self, s, words):
 
         indices = []
 
         whole_string_size = len(s)
         window_size = len("".join(words))
-        shift_size = 1
-        index = 0
+        window_shift_size = 1
+        offset = 0
 
-        while index + window_size <= whole_string_size:
-            substring = s[index: window_size+index]
-            match, remain_string = self.match(substring, words)
-            if match:
-                indices.append(index)
+        while self.hasSubstring(offset, window_size, whole_string_size):
 
-            #print(index, substring, words, match, remain_string)
-            index = index + shift_size
+            substring = s[offset: offset+window_size]
+
+            match_result, remain_string = self.match(substring, words)
+
+            if match_result:
+                indices.append(offset)
+
+            if self.debug:
+                print(offset, substring, words, match_result, remain_string)
+
+            offset = offset + window_shift_size
 
         return indices
 
+    def hasSubstring(self, offset, window_size, whole_string_size):
+        return offset + window_size <= whole_string_size
+
     def match(self, substring, words):
 
-        copied_words = list(words)
+        if not words:
+            return False, ''
+
+        targets = list(words)
+
         substring_size = len(substring)
-        slice_size = len(copied_words[0])
-        left = 0
-        remain_string = ''
-        while left + slice_size <= substring_size:
-            word = substring[left: left+slice_size]
-            if word not in copied_words:
-                remain_string = remain_string + word
+        slice_size = len(targets[0])
+
+        offset = 0
+        remain_word = ''
+        while offset + slice_size <= substring_size:
+
+            word = substring[offset: offset+slice_size]
+
+            if word in targets:
+                targets.remove(word)
 
             else:
-                copied_words.remove(word)
-            left = left + slice_size
+                remain_word = remain_word + word
 
-        return len(remain_string) == 0, remain_string
+            offset = offset + slice_size
+
+        return len(remain_word) == 0, remain_word
 
 
 class SolutionWrongAnswer(object):
