@@ -2,7 +2,8 @@
 
 Given a non-empty list of words, return the k most frequent elements.
 
-Your answer should be sorted by frequency from highest to lowest. If two words have the same frequency, then the word with the lower alphabetical order comes first.
+Your answer should be sorted by frequency from highest to lowest.
+If two words have the same frequency, then the word with the lower alphabetical order comes first.
 
 Example 1:
 Input: ["i", "love", "leetcode", "i", "love", "coding"], k = 2
@@ -32,4 +33,34 @@ class Solution(object):
         :type k: int
         :rtype: List[str]
         """
+
+        word_dict = self.buildWordDict(words)
+        top_k_frequent_words = self.findMostFrequentWords(word_dict, k)
+
+        return top_k_frequent_words
+
+    def buildWordDict(self, words):
+
+        word_dict = dict()
+
+        for word in words:
+            if word in word_dict:
+                word_dict[word] = word_dict[word] + 1
+            else:
+                word_dict[word] = 1
+
+        return word_dict
+
+    def findMostFrequentWords(self, word_dict, k):
+
+        from collections import Counter
+
+        counter = Counter(word_dict)
+        most_frequent_words = counter.most_common(k)
+
+        return [word for word, freq in most_frequent_words]
+
+
+
+
 
