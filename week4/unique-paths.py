@@ -42,6 +42,58 @@ class Solution(object):
 
     def __init__(self):
         self.memo = dict()
+        self.target_pos = (0, 0)
+
+    def uniquePaths(self, m, n):
+        """
+        :type m: int
+        :type n: int
+        :rtype: int
+        """
+
+        self.target_pos = (m, n)
+
+        for x in range(1, m+1):
+            for y in range(1, n+1):
+                num_of_paths = self.findUniquePaths(x, y)
+                self.saveMemo(curr_pos=(x, y), num_of_paths=num_of_paths)
+
+        return num_of_paths
+
+    def findUniquePaths(self, x, y):
+
+        paths = 0
+        if self.hasOnlyOnePath(x, y):
+            paths = 1
+        elif self.hasKnownPaths(x, y):
+            paths = self.getPaths(x, y)
+        else:
+            print("error", x, y)
+            exit(1)
+        return paths
+
+    def saveMemo(self, curr_pos, num_of_paths):
+        self.memo[curr_pos] = num_of_paths
+        self.memo[(curr_pos[1], curr_pos[0])] = num_of_paths
+
+    def hasOnlyOnePath(self, x, y):
+        return x == 1 or y == 1
+
+    def hasKnownPaths(self, x, y):
+        return ((x, y-1) in self.memo or (y-1, x) in self.memo)\
+               and ((x-1, y) in self.memo or (y, x-1) in self.memo)
+
+    def getPaths(self, x, y):
+        from_top_paths = self.memo[(x, y-1)]
+        from_left_paths = self.memo[(x-1, y)]
+
+        return from_top_paths + from_left_paths
+
+
+class SolutionSecond(object):
+
+    def __init__(self):
+        self.memo = dict()
 
     def uniquePaths(self, m, n):
         """
@@ -80,11 +132,10 @@ class Solution(object):
 
             return left + right
 
-    def validate(x, y):
-        if x == 1 or y == 1:
-            return 1
 
-    def uniquePathsWithRecursive(self, m, n):
+class SolutionByRecurrsion(object):
+
+    def uniquePaths(self, m, n):
         """
         :type m: int
         :type n: int
@@ -94,12 +145,14 @@ class Solution(object):
         if m == 1 or n == 1:
             return 1
         else:
-            return self.uniquePathsWithRecursive(m - 1, n) + self.uniquePathsWithRecursive(m, n - 1)
+            return self.uniquePaths(m - 1, n) + self.uniquePaths(m, n - 1)
 
 
 def main():
     m, n = 3, 2
-    Solution().uniquePaths(m, n)
+    print(Solution().uniquePaths(m, n))
+    #print(SolutionSecond().uniquePaths(m, n))
+    #print(SolutionByRecurrsion().uniquePaths(m, n))
 
 
 main()
