@@ -42,7 +42,6 @@ class Solution(object):
 
     def __init__(self):
         self.memo = dict()
-        self.target_pos = (0, 0)
 
     def uniquePaths(self, m, n):
         """
@@ -50,8 +49,6 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-
-        self.target_pos = (m, n)
 
         for x in range(1, m+1):
             for y in range(1, n+1):
