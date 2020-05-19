@@ -30,6 +30,9 @@ import time
 
 
 class Solution(object):
+    """
+    O(N)/O(N)
+    """
 
     def __init__(self):
         self.debug = False
