@@ -24,6 +24,29 @@ S consists only of English lowercase letters.
 """
 
 
+class Solution(object):
+    """
+    O(N)/O(N)
+    """
+
+    def removeDuplicates(self, S):
+        """
+        :type S: str
+        :rtype: str
+        """
+
+        stack = MyStack()
+
+        for letter in S:
+            if stack.isEmpty():
+                stack.push(letter)
+            elif stack.peek() == letter:
+                stack.pop()
+            else:
+                stack.push(letter)
+        return stack.to_string()
+
+
 class MyStack(object):
 
     def __init__(self):
@@ -43,31 +66,6 @@ class MyStack(object):
 
     def isEmpty(self):
         return len(self.store) == 0
-
-
-class Solution(object):
-    """
-    O(N)/O(N)
-    """
-
-    def removeDuplicates(self, S):
-        """
-        :type S: str
-        :rtype: str
-        """
-
-        stack = MyStack()
-
-        for letter in S:
-
-            if stack.isEmpty():
-                stack.push(letter)
-            elif stack.peek() == letter:
-                stack.pop()
-            else:
-                stack.push(letter)
-        return stack.to_string()
-
 
 def main():
     S = "abbaca"
