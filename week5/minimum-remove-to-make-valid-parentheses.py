@@ -67,15 +67,17 @@ class Solution(object):
 
     def findIndicesOfInvalidParentheses(self, s):
 
-        OPEN, CLOSE, EXIST = '(', ')', 1
+        OPEN, CLOSE, EXIST_FLAG = '(', ')', 1
+
         invalid_indices = {}
         open_parentheses = MyStack()
 
         for index, letter in enumerate(s):
 
             if letter == OPEN:
+
                 open_parentheses.push(index)
-                invalid_indices[index] = EXIST
+                invalid_indices[index] = EXIST_FLAG
 
             elif letter == CLOSE:
 
@@ -84,7 +86,7 @@ class Solution(object):
                     del invalid_indices[open_index]
 
                 else:
-                    invalid_indices[index] = EXIST
+                    invalid_indices[index] = EXIST_FLAG
 
         return invalid_indices
 
